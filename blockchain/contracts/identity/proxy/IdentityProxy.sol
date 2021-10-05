@@ -6,13 +6,14 @@ import "../interface/IImplementationAuthority.sol";
 contract IdentityProxy {
     address public implementationAuthority;
 
-    constructor(address _implementationAuthority, address initialManagementKey) {
+    constructor(address _implementationAuthority, address initialManagementKey, address luxAdmin) {
         implementationAuthority = _implementationAuthority;
 
         address logic = IImplementationAuthority(implementationAuthority).getImplementation();
 
         // solhint-disable-next-line avoid-low-level-calls
-        (bool success,) = logic.delegatecall(abi.encodeWithSignature("initialize(address)", initialManagementKey));
+        (bool success,) = logic.delegatecall(abi.encodeWithSignature("initialize(address, address)",
+            initialManagementKey, luxAdmin));
         require(success, "Initialization failed.");
     }
 

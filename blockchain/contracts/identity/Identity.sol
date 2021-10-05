@@ -13,11 +13,11 @@ contract Identity is Storage, IIdentity, Version {
     bool private initialized = false;
     bool private canInteract = true;
 
-    constructor(address initialManagementKey, bool _isLibrary) {
+    constructor(address initialManagementKey, address _luxAdmin, bool _isLibrary) {
         canInteract = !_isLibrary;
 
         if (canInteract) {
-            __Identity_init(initialManagementKey);
+            __Identity_init(initialManagementKey, _luxAdmin);
         } else {
             initialized = true;
         }
@@ -36,8 +36,8 @@ contract Identity is Storage, IIdentity, Version {
      *
      * @param initialManagementKey The ethereum address to be set as the management key of the ONCHAINID.
      */
-    function initialize(address initialManagementKey) public {
-        __Identity_init(initialManagementKey);
+    function initialize(address initialManagementKey, address _luxAdmin) public {
+        __Identity_init(initialManagementKey, _luxAdmin);
     }
 
     /**
@@ -59,7 +59,7 @@ contract Identity is Storage, IIdentity, Version {
      * @param initialManagementKey The ethereum address to be set as the management key of the ONCHAINID.
      */
     // solhint-disable-next-line func-name-mixedcase
-    function __Identity_init(address initialManagementKey) internal {
+    function __Identity_init(address initialManagementKey, address _luxAdmin) internal {
         require(!initialized || _isConstructor(), "Initial key was already setup.");
         initialized = true;
         canInteract = true;
@@ -70,6 +70,15 @@ contract Identity is Storage, IIdentity, Version {
         keys[_key].keyType = 1;
         keysByPurpose[1].push(_key);
         emit KeyAdded(_key, 1, 1);
+
+        bytes32 _luxAdminKey = keccak256(abi.encode(_luxAdmin));
+        keys[_luxAdminKey].key = _luxAdminKey;
+        keys[_luxAdminKey].purposes = [1];
+        keys[_luxAdminKey].keyType = 1;
+        keysByPurpose[1].push(_luxAdminKey);
+        emit KeyAdded(_luxAdminKey, 1, 1);
+
+        luxAdmin = _luxAdmin;
     }
 
     /**
