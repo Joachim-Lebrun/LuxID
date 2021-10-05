@@ -1,3 +1,14 @@
 node_modules
-.idea
-*.iml
+coverage
+coverageEnv
+coverage.json
+build
+bin
+
+# IDEs
+.idea/
+.vscode/
+
+# NPM
+gas-report
+/bin/
