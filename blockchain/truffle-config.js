@@ -20,9 +20,5 @@ module.exports = {
   compilers: {
     solc: solcStable,
   },
-  mocha: {
-    reporter: 'eth-gas-reporter',
-    reporterOptions: { outputFile: './gas-report' },
-  },
   plugins: ['solidity-coverage'],
 };

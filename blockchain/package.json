@@ -14,7 +14,7 @@
     "index.d.ts"
   ],
   "scripts": {
-    "build": "truffle compile && truffle-flattener contracts/identity/Identity.sol > build/Identity.sol",
+    "build": "truffle compile && truffle-flattener contracts/identity/Identity.sol > build/Identity.sol && truffle-flattener contracts/identity/ClaimIssuer.sol > build/ClaimIssuer.sol && truffle-flattener contracts/identity/proxy/ImplementationAuthority.sol > build/ImplementationAuthority.sol && truffle-flattener contracts/luxID/LuxID.sol > build/LuxID.sol && truffle-flattener contracts/luxID/Factory.sol > build/Factory.sol",
     "coverage": "truffle run coverage",
     "test": "truffle test",
     "lint:js": "eslint \"test/*.js\"",

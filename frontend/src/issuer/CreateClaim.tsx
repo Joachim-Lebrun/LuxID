@@ -3,6 +3,8 @@ import { useEthers } from '@usedapp/core';
 import {ethers} from 'ethers';
 import { createClaim } from '../firebase';
 import * as uuid from 'uuid';
+import {Button, Grid, InputLabel, Select, TextField} from "@mui/material";
+import "../style/style.css";
 
 export const CreateClaim: VFC = () => {
   const [address, setAddress] = useState<string>('');
@@ -53,14 +55,29 @@ export const CreateClaim: VFC = () => {
 
   }, [address, type, amount, currency]);
 
-  return <form>
-    <input type="text" placeholder="Address" onChange={e=>setAddress(e.target.value)}/>
-    <select onChange={e => setType(e.target.value as any)}>
+  return <form className="formClaim">
+    <Grid container spacing={2}>
+      <Grid item xs={1}>
+        <p> </p>
+      </Grid>
+      <Grid item xs={2}>
+    <TextField variant="standard" placeholder="Address" onChange={e=>setAddress(e.target.value)}/>
+      </Grid>
+      <Grid item xs={2}>
+    <Select label="action" onChange={e => setType(e.target.value as any)}>
       <option value="BUY">Buy</option>
       <option value="SELL">Sell</option>
-    </select>
-    <input type="text" placeholder="Amount" onChange={e=>setAmount(e.target.value)}/>
-    <input type="text" placeholder="Currency" onChange={e=>setCurrency(e.target.value)}/>
-    <button onClick={submit}>Create claim</button>
+    </Select>
+      </Grid>
+      <Grid item xs={2}>
+    <TextField variant="standard" placeholder="Amount" onChange={e=>setAmount(e.target.value)}/>
+      </Grid>
+      <Grid item xs={2}>
+    <TextField variant="standard" placeholder="Currency" onChange={e=>setCurrency(e.target.value)}/>
+      </Grid>
+      <Grid item xs={2}>
+    <Button variant="contained" onClick={submit}>Create claim</Button>
+      </Grid>
+    </Grid>
   </form>
 }
