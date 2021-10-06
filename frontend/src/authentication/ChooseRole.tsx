@@ -1,10 +1,11 @@
-import { ReactElement, useContext, VFC } from 'react';
+import { ReactElement, useContext, useState, VFC } from 'react';
 import { AuthenticationContext } from '../contexts/AuthenticationContext';
 import { Role } from '../domain/role';
 import { useEthers } from '@usedapp/core';
 import {Button, Grid} from "@mui/material";
 import '../style/style.css';
 
+import { VerifyQrCode } from '../verify/VerifyQrCode';
 
 const renderRole = (role: Role, assumeRole: (role: Role) => void): ReactElement => {
 
@@ -25,10 +26,13 @@ export const ChooseRole: VFC= () => {
 
   const {state, assumeRole} = useContext(AuthenticationContext);
   const {deactivate, account} = useEthers();
+  const [verify, setVerify] = useState(false);
 
   if(state.status !== 'AUTHENTICATED') {
     throw new Error('Bad state');
   }
+
+  if(verify) return <VerifyQrCode/>
 
   return <div>
     <ol>
@@ -38,6 +42,7 @@ export const ChooseRole: VFC= () => {
 
   </ol>
     <Button variant="contained" onClick={() => deactivate()}>Logout</Button>
+    <button onClick={() => setVerify(true)}>Verify QR code</button>
   </div>
 
 }
