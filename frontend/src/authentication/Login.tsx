@@ -5,6 +5,7 @@ import { useEthers } from '@usedapp/core';
 import { ChooseRole } from './ChooseRole';
 import { useContainer } from '../contexts/ContainerContext';
 import { Bar } from '../components/Bar';
+import { Button } from '@mui/material';
 
 export const Login: VFC = () => {
   const {state, logout, login} = useContext(AuthenticationContext);
@@ -43,5 +44,5 @@ export const Login: VFC = () => {
     </Bar>;
   }
 
-  return <button onClick={onButtonClick}>Login with metamask {account}</button>;
+  return <Button onClick={onButtonClick} variant="contained">Login with metamask {account}</Button>;
 }
