@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
 import "./interface/IClaimIssuer.sol";
@@ -7,7 +7,7 @@ import "./Identity.sol";
 contract ClaimIssuer is IClaimIssuer, Identity {
     mapping (bytes => bool) public revokedClaims;
 
-    constructor(address initialManagementKey, address luxAdmin) Identity(initialManagementKey, luxAdmin, false) {}
+    constructor(address initialManagementKey) Identity(initialManagementKey, false) {}
 
     /**
      * @dev Revoke a claim previously issued, the claim is no longer considered as valid after revocation.

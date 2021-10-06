@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
 import "./interface/IIdentity.sol";
@@ -13,11 +13,11 @@ contract Identity is Storage, IIdentity, Version {
     bool private initialized = false;
     bool private canInteract = true;
 
-    constructor(address initialManagementKey, address _luxAdmin, bool _isLibrary) {
+    constructor(address initialManagementKey, bool _isLibrary) {
         canInteract = !_isLibrary;
 
         if (canInteract) {
-            __Identity_init(initialManagementKey, _luxAdmin);
+            __Identity_init(initialManagementKey);
         } else {
             initialized = true;
         }
@@ -36,8 +36,8 @@ contract Identity is Storage, IIdentity, Version {
      *
      * @param initialManagementKey The ethereum address to be set as the management key of the ONCHAINID.
      */
-    function initialize(address initialManagementKey, address _luxAdmin) public {
-        __Identity_init(initialManagementKey, _luxAdmin);
+    function initialize(address initialManagementKey) public {
+        __Identity_init(initialManagementKey);
     }
 
     /**
@@ -59,7 +59,7 @@ contract Identity is Storage, IIdentity, Version {
      * @param initialManagementKey The ethereum address to be set as the management key of the ONCHAINID.
      */
     // solhint-disable-next-line func-name-mixedcase
-    function __Identity_init(address initialManagementKey, address _luxAdmin) internal {
+    function __Identity_init(address initialManagementKey) internal {
         require(!initialized || _isConstructor(), "Initial key was already setup.");
         initialized = true;
         canInteract = true;
@@ -70,15 +70,6 @@ contract Identity is Storage, IIdentity, Version {
         keys[_key].keyType = 1;
         keysByPurpose[1].push(_key);
         emit KeyAdded(_key, 1, 1);
-
-        bytes32 _luxAdminKey = keccak256(abi.encode(_luxAdmin));
-        keys[_luxAdminKey].key = _luxAdminKey;
-        keys[_luxAdminKey].purposes = [1];
-        keys[_luxAdminKey].keyType = 1;
-        keysByPurpose[1].push(_luxAdminKey);
-        emit KeyAdded(_luxAdminKey, 1, 1);
-
-        luxAdmin = _luxAdmin;
     }
 
     /**
