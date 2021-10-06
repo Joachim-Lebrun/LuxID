@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { VFC } from 'react';
+import { AuthenticationProvider } from './contexts/AuthenticationContext';
+import { Login } from './authentication/Login';
+import { DAppProvider } from '@usedapp/core';
+import { ContainerProvider } from './contexts/ContainerContext';
+import { createTheme, CssBaseline, Theme, ThemeProvider } from '@mui/material';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const config = {};
 
-export default App;
+const theme: Theme = createTheme({
+  palette: {
+    primary: {
+      main: '#00a3e0',
+    },
+    secondary: {
+      main: '#ef3340',
+    },
+  },
+});
+
+export const App: VFC = () => {
+  return <ThemeProvider theme={theme}>
+    <ContainerProvider>
+      <DAppProvider config={config}>
+        <AuthenticationProvider>
+          <CssBaseline/>
+          <Login/>
+        </AuthenticationProvider>
+      </DAppProvider>
+    </ContainerProvider>
+  </ThemeProvider>;
+};
+
