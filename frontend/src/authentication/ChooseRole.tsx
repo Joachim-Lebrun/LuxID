@@ -42,7 +42,7 @@ export const ChooseRole: VFC= () => {
 
   </ol>
     <Button variant="contained" onClick={() => deactivate()}>Logout</Button>
-    <button onClick={() => setVerify(true)}>Verify QR code</button>
+    <Button onClick={() => setVerify(true)}>Verify QR code</Button>
   </div>
 
 }
