@@ -38,7 +38,7 @@ export const AuthenticationProvider: FC = ({children}) => {
       assumedRole: undefined,
       availableRoles: roles,
     })
-  }, []);
+  }, [deactivate]);
 
   const logout = useCallback(() => {
     deactivate();

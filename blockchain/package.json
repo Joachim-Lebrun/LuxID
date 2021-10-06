@@ -1,5 +1,5 @@
 {
-  "name": "@luxid",
+  "name": "@luxid/blockchain",
   "version": "0.0.1",
   "description": "an identity system for Luxembourg",
   "main": "index.js",
