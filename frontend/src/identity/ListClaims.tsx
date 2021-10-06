@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState, VFC } from 'react';
 import { Claim, createClaim, getClaimsForIdentity } from '../firebase';
 import { Identity__factory } from '../contracts';
 import { useEthers } from '@usedapp/core';
+import QRCode from 'react-qr-code';
 
 export const ListClaims: VFC = () => {
   const [claims, setClaims] = useState<Claim[]>([]);
@@ -29,6 +30,9 @@ export const ListClaims: VFC = () => {
     Currency : {c.content.currency}
     {!c.issued && <div>Ready to be issued<button onClick={issueClaim(c)}>Issue</button></div>}
     {c.issued}Already issued
+      <div className="HpQrcode">
+        <QRCode value={JSON.stringify({privateData: c.encodedContent, signature: c.signature, claimIssuer: c.claimIssuer})}/>
+      </div>
   </div>)}
   </div>
 }
